@@ -13,10 +13,8 @@ export async function GET({ params, setHeaders }) {
 		'Vercel-CDN-Cache-Control': `public, s-maxage=${year}`,
 	})
 
-	const { document } = parseHTML('<h1>hello</h1>')
-	const text = document.querySelector('h1')?.innerText
-
-	return json(text)
+	const html = await getContributions(params)
+	return json(html)
 
 	// const html = await getContributions(params)
 	// return json(parseContributions(html))
