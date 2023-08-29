@@ -1,10 +1,10 @@
 # GitHub Contributions API
 
-This is a GitHub contributions API that scrapes data from [https://github.com/users/user/contributions](https://github.com/users/mattcroat/contributions) and returns the GitHub contributions data as JSON using [SvelteKit](https://kit.svelte.dev/).
+The [SvelteKit](https://kit.svelte.dev/) GitHub contributions API scrapes the data from GitHub and returns the GitHub contributions data as JSON.
 
-To retrieve your GitHub contributions you can `fetch` the API at `http://api.com/user/year`.
+If you want to use the API in a real project, host it yourself on [Vercel](https://vercel.com/) which takes a minute but gives you peace of mind in case it ever goes down.
 
-Please don't use the API in a serious project and instead host it yourself on [Vercel](https://vercel.com/) which takes a minute and gives you peace of mind.
+You can watch the video how I made this API on [YouTube](https://www.youtube.com/watch?v=T-lBPpeokfY) if you want to learn more about web scraping with SvelteKit.
 
 ## Local Development
 
