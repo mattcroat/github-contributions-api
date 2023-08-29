@@ -7,6 +7,7 @@ export async function GET({ params, setHeaders }) {
 
 	// https://vercel.com/docs/edge-network/caching#cdn-cache-control
 	setHeaders({
+		'Access-Control-Allow-Origin': '*',
 		'Cache-Control': `public, s-maxage=${year}`,
 		'CDN-Cache-Control': `public, s-maxage=${year}`,
 		'Vercel-CDN-Cache-Control': `public, s-maxage=${year}`,
