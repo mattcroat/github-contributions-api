@@ -2,7 +2,13 @@
 	<title>GitHub API</title>
 </svelte:head>
 
-<h1>GitHub Contributions</h1>
+<div class="text-center">
+	<h1>GitHub Contributions API</h1>
+
+	<a href="https://gh-contributions-api.vercel.app/user/year">
+		https://gh-contributions-api.vercel.app/user/year
+	</a>
+</div>
 
 <style>
 	:global(html, body) {
@@ -17,7 +23,11 @@
 		background-color: hsl(220 10% 10%);
 	}
 
-	h1 {
+	a {
+		color: #fff;
+	}
+
+	.text-center {
 		text-align: center;
 	}
 </style>
