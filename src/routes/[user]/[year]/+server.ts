@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit'
-// import { parseHTML } from 'linkedom'
+import { parseHTML } from 'linkedom'
 import type { RouteParams } from './$types.js'
 
 export async function GET({ params, setHeaders }) {
@@ -13,7 +13,10 @@ export async function GET({ params, setHeaders }) {
 		'Vercel-CDN-Cache-Control': `public, s-maxage=${year}`,
 	})
 
-	return json('test')
+	const { document } = parseHTML('<h1>hello</h1>')
+	const text = document.querySelector('h1')?.innerText
+
+	return json(text)
 
 	// const html = await getContributions(params)
 	// return json(parseContributions(html))
