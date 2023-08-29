@@ -28,13 +28,17 @@ async function getContributions({ user, year }: RouteParams) {
 		api = `https://github.com/users/${user}/contributions?from=${year}-${month}-01&to=${date}`
 	}
 
-	const response = await fetch(api)
+	try {
+		const response = await fetch(api)
 
-	if (!response.ok) {
-		throw new Error(`Failed to fetch: ${response.status}`)
+		if (!response.ok) {
+			throw new Error(`Failed to fetch: ${response.status}`)
+		}
+
+		return await response.text()
+	} catch (e) {
+		throw new Error(`Something went wrong: ${e}`)
 	}
-
-	return await response.text()
 }
 
 function parseContributions(html: string) {
