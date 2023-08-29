@@ -14,10 +14,7 @@ export async function GET({ params, setHeaders }) {
 	})
 
 	const html = await getContributions(params)
-	return json(html)
-
-	// const html = await getContributions(params)
-	// return json(parseContributions(html))
+	return json(parseContributions(html))
 }
 
 async function getContributions({ user, year }: RouteParams) {
