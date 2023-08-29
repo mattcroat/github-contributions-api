@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit'
-import { parseHTML } from 'linkedom'
+// import { parseHTML } from 'linkedom'
 import type { RouteParams } from './$types.js'
 
 export async function GET({ params, setHeaders }) {
@@ -13,8 +13,10 @@ export async function GET({ params, setHeaders }) {
 		'Vercel-CDN-Cache-Control': `public, s-maxage=${year}`,
 	})
 
-	const html = await getContributions(params)
-	return json(parseContributions(html))
+	return json('test')
+
+	// const html = await getContributions(params)
+	// return json(parseContributions(html))
 }
 
 async function getContributions({ user, year }: RouteParams) {
