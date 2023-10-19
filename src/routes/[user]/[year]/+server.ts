@@ -53,21 +53,26 @@ function parseContributions(html: string) {
 
 		const currentRow = []
 
+		const dayOfWeekElement = row.querySelector('td.ContributionCalendar-label');
+		const dayOfWeek = dayOfWeekElement!.querySelector('span:first-child')!.textContent;
+		currentRow.push(dayOfWeek);
+
 		for (const day of days) {
 			const data = day.innerText.split(' ')
 
 			if (data.length > 1) {
 				const contribution = {
 					count: data[0] === 'No' ? 0 : +data[0],
-					name: data[3].replace(',', ''),
-					month: data[4],
-					day: +data[5].replace(',', ''),
-					year: +data[6],
+					name: dayOfWeek,
+					date: day.dataset.date,
+					month: data[3],
+					day: data[4].slice(0, -3),
+					year: day.dataset.date!.split('-')[0],
 					level: +day.dataset.level!,
 				}
 				currentRow.push(contribution)
 			} else {
-				currentRow.push(null)
+				// currentRow.push(null)
 			}
 		}
 
