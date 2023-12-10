@@ -2,6 +2,13 @@ import { json } from '@sveltejs/kit'
 import { parseHTML } from 'linkedom'
 import type { RouteParams } from './$types.js'
 
+type Contribution = {
+	count: number
+	month: string
+	day: number
+	level: number
+} | null
+
 export async function GET({ params, setHeaders }) {
 	const year = 60 * 60 * 24 * 365
 
@@ -44,32 +51,40 @@ async function getContributions({ user, year }: RouteParams) {
 function parseContributions(html: string) {
 	const { document } = parseHTML(html)
 
-	const rows = document.querySelectorAll<HTMLTableRowElement>('tbody > tr')
+	const days = document.querySelectorAll<Element>('tool-tip')
 
-	const contributions = []
+	const contributions: Contribution[][] = [
+		[], // Sundays
+		[], // Mondays
+		[], // Tuesdays
+		[], // Wednesdays
+		[], // Thursdays
+		[], // Fridays
+		[], // Saturdays
+	]
 
-	for (const row of rows) {
-		const days = row.querySelectorAll<HTMLTableCellElement>('td:not(.ContributionCalendar-label)')
+	for (const [_, day] of days.entries()) {
+		const data = day.innerHTML.split(' ')
 
-		const currentRow = []
+		const forDayRaw = day.getAttribute('for')
+		if (!forDayRaw) continue
 
-		for (const day of days) {
-			const data = day.innerText.split(' ')
+		const forDay = forDayRaw.replace('contribution-day-component-', '')
+		const [weekday, week] = forDay.split('-').map(Number)
 
-			if (data.length > 1) {
-				const contribution = {
-					count: data[0] === 'No' ? 0 : +data[0],
-					month: data[3],
-					day: data[4].replace('.', ''),
-					level: +day.dataset.level!,
-				}
-				currentRow.push(contribution)
-			} else {
-				currentRow.push(null)
+		if (data.length > 1) {
+			const td = document.getElementById(forDayRaw)
+			if (!td) continue
+
+			const level = td.dataset.level || '0'
+			const contribution = {
+				count: data[0] === 'No' ? 0 : +data[0],
+				month: data[3],
+				day: +data[4].replace(/(st|nd|rd|th)/, ''),
+				level: +level,
 			}
+			contributions[weekday][week] = contribution
 		}
-
-		contributions.push(currentRow)
 	}
 
 	return contributions
